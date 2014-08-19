@@ -85,9 +85,9 @@ module.exports = function(options, wp, done) {
   });
 
   // If entry point manually specified, trigger that
-  if (options.entry) {
-    stream.end();
-  }
+  // if (options.entry) {
+  //   stream.end();
+  // }
 
   return stream;
 };
