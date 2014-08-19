@@ -45,7 +45,9 @@ module.exports = function(options, wp, done) {
     entry = entry || {};
     console.log(file.path);
     if(options.trimPath)
-      entry[file.path.replace(options.trimPath,'')] = file.path;
+      //https://github.com/webpack/webpack/issues/300
+      //wrap entry in an array to allow entry dependencies
+      entry[file.path.replace(options.trimPath,'')] = [file.path];
     else
       entry[file.path] = file.path;
   }, function() {
