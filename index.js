@@ -44,7 +44,10 @@ module.exports = function(options, wp, done) {
   var stream = through(function(file) {
     entry = entry || {};
     console.log(file.path);
-    entry[file.path] = file.path;
+    if(options.trimPath)
+      entry[file.path.replace(options.trimPath,'')] = file.path;
+    else
+      entry[file.path] = file.path;
   }, function() {
     var self = this;
     if (entry.length < 2) entry = entry[0] || entry;
