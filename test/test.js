@@ -12,7 +12,7 @@ test('streams output assets', function(t) {
     output: {
       filename: 'bundle.js'
     },
-    quiet: true,
+    //quiet: true,
   });
   var entry = new File({
     cwd: base,

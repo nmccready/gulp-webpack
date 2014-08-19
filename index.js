@@ -39,11 +39,12 @@ module.exports = function(options, wp, done) {
   }
 
   var webpack = wp || require('webpack');
-  var entry = [];
+  var entry = {};
 
   var stream = through(function(file) {
-    entry = entry || [];
-    entry.push(file.path);
+    entry = entry || {};
+    console.log(file.path);
+    entry[file.path] = file.path;
   }, function() {
     var self = this;
     if (entry.length < 2) entry = entry[0] || entry;
