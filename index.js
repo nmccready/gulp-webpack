@@ -39,25 +39,20 @@ module.exports = function(options, wp, done) {
   }
 
   var webpack = wp || require('webpack');
-  var entry = {};
+  var entry = [];
 
   var stream = through(function(file) {
-    entry = entry || {};
-    console.log(file.path);
-    if(options.trimPath)
-      //https://github.com/webpack/webpack/issues/300
-      //wrap entry in an array to allow entry dependencies
-      entry[file.path.replace(options.trimPath,'')] = [file.path];
-    else
-      entry[file.path] = file.path;
+    entry = entry || [];
+      entry.push(file.path);
   }, function() {
     var self = this;
     if (entry.length < 2) entry = entry[0] || entry;
     if (!options.entry) {
       options.entry = entry;
     }else{
-      //extend entry, allow combination of a conf file and something from gulp matching
-      options.entry = _.extend(options.entry,entry);
+      //extend entry
+      var obj = {}.gulpWebPackMain = entry;
+      options.entry = _.extend(options.entry, obj);
     }
     options.output = options.output || {};
     if (!options.output.path) options.output.path = process.cwd();
