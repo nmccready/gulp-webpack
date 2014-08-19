@@ -4,6 +4,7 @@ var gutil = require('gulp-util');
 var File = require('vinyl');
 var MemoryFileSystem = require('memory-fs');
 var through = require('through');
+var _ = require('lodash');
 
 var PLUGIN_NAME = 'gulp-webpack';
 
@@ -46,7 +47,12 @@ module.exports = function(options, wp, done) {
   }, function() {
     var self = this;
     if (entry.length < 2) entry = entry[0] || entry;
-    if (!options.entry) options.entry = entry;
+    if (!options.entry) {
+      options.entry = entry;
+    }else{
+      //extend entry, allow combination of a conf file and something from gulp matching
+      options.entry = _.extend(options.entry,entry);
+    }
     options.output = options.output || {};
     if (!options.output.path) options.output.path = process.cwd();
     if (!options.output.filename) options.output.filename = '[hash].js';
